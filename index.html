@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>英検準1級 語彙トレーニング</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500&display=swap');
 
     :root {
       --bg: #F7F4EF;
@@ -35,7 +35,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -64,12 +64,12 @@
       letter-spacing: 0.22em;
       color: var(--gold);
       text-transform: uppercase;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
       font-weight: 500;
       margin-bottom: 3px;
     }
     .header-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Serif JP', serif;
       font-size: 18px;
       font-weight: 600;
       color: var(--text);
@@ -99,7 +99,7 @@
       flex-wrap: wrap;
     }
     .day-badge {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 12px;
       font-weight: 500;
       color: var(--indigo);
@@ -115,7 +115,7 @@
       padding: 2px 10px;
       border-radius: 3px;
       text-transform: uppercase;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
     }
     .mode-study { background: var(--gold-bg); color: var(--gold); border: 1px solid #DEC080; }
     .mode-quiz  { background: var(--indigo-bg); color: var(--indigo); border: 1px solid #C0CAED; }
@@ -130,13 +130,35 @@
     /* ── Mode select ── */
     .mode-select { padding: 4px 0; }
     .mode-select-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Serif JP', serif;
       font-size: 20px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text);
       text-align: center;
       margin-bottom: 6px;
       letter-spacing: 0.03em;
+    }
+    .countdown-badge {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      background: var(--gold-bg);
+      border: 1px solid #DEC080;
+      border-radius: 4px;
+      padding: 5px 16px;
+      margin: 0 auto 8px;
+    }
+    .countdown-num {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .countdown-label {
+      font-size: 12px;
+      color: var(--text2);
+      letter-spacing: 0.05em;
     }
     .mode-select-sub {
       font-size: 11px;
@@ -163,8 +185,8 @@
     .mode-btn:hover { background: var(--surface2); border-color: var(--text3); }
     .mode-btn-icon { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
     .mode-btn-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 3px;
@@ -199,7 +221,7 @@
       margin-bottom: 14px;
     }
     .word-num {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 11px;
       color: var(--text3);
       letter-spacing: 0.05em;
@@ -214,20 +236,22 @@
       background: var(--bg);
     }
     .word-en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 46px;
-      font-weight: 500;
+      font-family: Georgia, 'Times New Roman', 'Yu Mincho', serif;
+      font-size: 48px;
+      font-weight: 700;
       color: var(--text);
-      letter-spacing: -0.02em;
-      line-height: 1.05;
+      letter-spacing: 0em;
+      line-height: 1.1;
       margin-bottom: 6px;
     }
     .word-ja {
-      font-size: 17px;
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      font-size: 18px;
       font-weight: 400;
       color: var(--text2);
       margin-bottom: 18px;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
     }
 
     /* Example box */
@@ -239,24 +263,27 @@
       margin-bottom: 14px;
     }
     .ex-en {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: Georgia, 'Times New Roman', serif;
       font-size: 16px;
       color: var(--text);
-      line-height: 1.75;
-      margin-bottom: 6px;
-      font-style: italic;
+      line-height: 1.85;
+      margin-bottom: 8px;
+      font-style: normal;
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
     .ex-blank {
       font-style: normal;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--indigo);
       border-bottom: 1.5px solid var(--indigo);
       padding: 0 4px;
     }
     .ex-ja {
-      font-size: 11px;
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      font-size: 13px;
       color: var(--text3);
-      line-height: 1.6;
+      line-height: 1.75;
     }
 
     /* Etymology & family */
@@ -268,7 +295,7 @@
       margin-bottom: 10px;
     }
     .etymology-label {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 9px;
       letter-spacing: 0.18em;
       color: var(--gold);
@@ -276,9 +303,10 @@
       margin-bottom: 5px;
     }
     .etymology-text {
-      font-size: 12px;
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      font-size: 13px;
       color: var(--text2);
-      line-height: 1.7;
+      line-height: 1.8;
     }
     .family-box {
       background: var(--surface2);
@@ -287,7 +315,7 @@
       padding: 10px 16px;
     }
     .family-label {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 9px;
       letter-spacing: 0.18em;
       color: var(--text3);
@@ -300,12 +328,12 @@
       gap: 6px;
     }
     .family-tag {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 14px;
       color: var(--indigo);
       background: var(--indigo-bg);
       border: 1px solid #C0CAED;
-      padding: 2px 10px;
+      padding: 3px 12px;
       border-radius: 3px;
       letter-spacing: 0.02em;
     }
@@ -331,12 +359,13 @@
       margin-bottom: 12px;
     }
     .quiz-sentence {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      font-style: italic;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 17px;
+      font-style: normal;
       color: var(--text);
-      line-height: 1.8;
+      line-height: 1.9;
       margin-bottom: 6px;
+      letter-spacing: 0.01em;
     }
     .quiz-blank-slot {
       display: inline-block;
@@ -365,13 +394,14 @@
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 17px;
-      font-weight: 500;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
+      font-weight: 400;
       letter-spacing: 0.02em;
       cursor: pointer;
       transition: all .15s;
       text-align: center;
+      min-height: 52px;
     }
     .choice-btn:hover:not(:disabled) { background: var(--surface2); border-color: var(--text3); }
     .choice-btn.correct  { background: var(--green-bg)!important; border-color: #70B890!important; color: var(--green)!important; }
@@ -398,8 +428,8 @@
       margin-bottom: 14px;
     }
     .summary-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 18px;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 16px;
@@ -414,7 +444,7 @@
     }
     .summary-row:last-child { border-bottom: none; }
     .summary-label { font-size: 12px; color: var(--text2); letter-spacing: 0.03em; }
-    .summary-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; }
+    .summary-val { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 700; }
     .val-good { color: var(--green); }
     .val-warn { color: var(--amber); }
     .val-bad  { color: var(--red); }
@@ -425,7 +455,7 @@
       color: var(--text3);
       text-transform: uppercase;
       margin-bottom: 8px;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Sans JP', sans-serif;
     }
     .weak-item {
       display: flex;
@@ -437,26 +467,26 @@
       border-radius: 5px;
       margin-bottom: 6px;
     }
-    .weak-word { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 500; color: var(--text); }
-    .weak-meaning { font-size: 11px; color: var(--text3); margin-left: 6px; }
+    .weak-word { font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-weight: 400; color: var(--text); }
+    .weak-meaning { font-family: 'Noto Serif JP', serif; font-size: 11px; color: var(--text3); margin-left: 6px; }
     .weak-cnt { font-size: 10px; color: var(--red); background: var(--red-bg); border: 1px solid #C08080; padding: 2px 8px; border-radius: 3px; }
 
     /* History */
     .hist-section { margin-top: 20px; border-top: 1px solid var(--border-light); padding-top: 16px; }
-    .hist-title { font-size: 9px; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 12px; font-family: 'Cormorant Garamond', serif; }
+    .hist-title { font-size: 9px; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 12px; font-family: 'Noto Sans JP', sans-serif; }
     .hist-chart { display: flex; align-items: flex-end; gap: 5px; height: 72px; margin-bottom: 12px; }
     .hist-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; min-width: 0; }
     .hist-bar-bg { width: 100%; background: var(--bg); border: 1px solid var(--border-light); border-radius: 3px; overflow: hidden; height: 48px; display: flex; align-items: flex-end; }
     .hist-bar-fill { width: 100%; border-radius: 2px; transition: height .5s ease; min-height: 2px; }
-    .hist-bar-pct { font-size: 8px; color: var(--text3); text-align: center; width: 100%; font-family: 'Cormorant Garamond', serif; }
+    .hist-bar-pct { font-size: 8px; color: var(--text3); text-align: center; width: 100%; }
     .hist-bar-date { font-size: 8px; color: var(--text3); text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .hist-row { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
     .hist-row:last-child { border-bottom: none; }
     .hist-row-date { font-size: 11px; color: var(--text2); flex: 1; }
-    .hist-row-day { font-family: 'Cormorant Garamond', serif; font-size: 12px; color: var(--text3); width: 44px; text-align: center; }
+    .hist-row-day { font-size: 12px; color: var(--text3); width: 44px; text-align: center; }
     .hist-row-bar { flex: 2; height: 4px; background: var(--border-light); border-radius: 2px; overflow: hidden; margin: 0 10px; }
     .hist-row-fill { height: 100%; border-radius: 2px; }
-    .hist-row-pct { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 500; width: 38px; text-align: right; }
+    .hist-row-pct { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; font-weight: 700; width: 38px; text-align: right; }
 
     /* Stats page */
     .stats-page { padding: 4px 0; }
@@ -468,7 +498,7 @@
       cursor: pointer; padding: 4px 0 20px;
     }
     .stats-back:hover { color: var(--text); }
-    .stats-section-title { font-size: 9px; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 12px; margin-top: 4px; font-family: 'Cormorant Garamond', serif; }
+    .stats-section-title { font-size: 9px; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 12px; margin-top: 4px; font-family: 'Noto Sans JP', sans-serif; }
 
     /* Nav */
     .nav { display: flex; gap: 10px; }
@@ -495,7 +525,7 @@
     /* misc */
     .center-msg { text-align: center; padding: 48px 20px; }
     .center-icon { font-size: 32px; margin-bottom: 12px; }
-    .center-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+    .center-title { font-family: 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
     .center-sub { font-size: 12px; color: var(--text3); line-height: 1.9; }
     .hidden { display: none; }
   </style>
@@ -527,6 +557,14 @@
     <div id="modeSelectView" class="hidden">
       <div class="mode-select">
         <div class="mode-select-title" id="modeSelectTitle">Day 1</div>
+        <div style="text-align:center;margin-bottom:10px">
+          <div class="countdown-badge" id="countdownBadge" style="display:none">
+            <span class="countdown-label">試験まで あと</span>
+            <span class="countdown-num" id="countdownNum">—</span>
+            <span class="countdown-label">日</span>
+          </div>
+          <div id="examPassedMsg" style="display:none;font-size:12px;color:var(--green);padding:4px 0">✦ 試験日を過ぎました</div>
+        </div>
         <div class="mode-select-sub" id="modeSelectSub">どちらから始めますか？</div>
         <button class="mode-btn" onclick="startStudy()">
           <span class="mode-btn-icon">◈</span>
@@ -847,6 +885,7 @@ const ALL_WORDS = [
 ];
 
 const START=new Date("2026-04-20T00:00:00"),PER_DAY=20,MAX_W=1200;
+const EXAM_DATE=new Date("2026-05-31T00:00:00");
 const SRS_KEY="p1_srs_v1",HIST_KEY="p1_hist_v1";
 
 // ── SRS ──────────────────────────────────────────
@@ -1054,6 +1093,24 @@ function loadDay(s){
   document.getElementById("counter").classList.add("hidden");
   document.getElementById("progressFill").style.width="0%";
   wordIdx=0;
+  // カウントダウン計算
+  const selected=new Date(s+"T00:00:00");
+  const diffMs=EXAM_DATE-selected;
+  const diffDays=Math.ceil(diffMs/86400000);
+  const badge=document.getElementById("countdownBadge");
+  const passed=document.getElementById("examPassedMsg");
+  if(diffDays>0){
+    badge.style.display="inline-flex";
+    passed.style.display="none";
+    document.getElementById("countdownNum").textContent=diffDays;
+  } else if(diffDays===0){
+    badge.style.display="inline-flex";
+    passed.style.display="none";
+    document.getElementById("countdownNum").textContent="0";
+  } else {
+    badge.style.display="none";
+    passed.style.display="block";
+  }
   if(st>MAX_W){showView("completeView");return;}
   dayWords=ALL_WORDS.filter(w=>w.n>=st&&w.n<=en);
   if(!dayWords.length){showView("noDataView");return;}
