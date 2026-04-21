@@ -528,6 +528,32 @@
     .center-title { font-family: 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
     .center-sub { font-size: 12px; color: var(--text3); line-height: 1.9; }
     .hidden { display: none; }
+    /* ── Word list ── */
+    .wordlist-page { padding: 4px 0; }
+    .wordlist-back { display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--text3);font-size:12px;font-family:inherit;cursor:pointer;padding:4px 0 18px;width:100%; }
+    .wordlist-back:hover { color:var(--text); }
+    .wordlist-header { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px; }
+    .wordlist-title { font-family:'Noto Serif JP',serif;font-size:16px;font-weight:600;color:var(--text); }
+    .wordlist-count { font-size:11px;color:var(--text3); }
+    .wordlist-item {
+      display:flex;align-items:center;gap:12px;
+      padding:13px 14px;
+      background:var(--surface);
+      border:1px solid var(--border-light);
+      border-radius:7px;
+      margin-bottom:8px;
+      cursor:pointer;
+      transition:all .15s;
+    }
+    .wordlist-item:hover { background:var(--surface2);border-color:var(--border); }
+    .wordlist-rank { font-size:11px;color:var(--text3);width:22px;text-align:right;flex-shrink:0; }
+    .wordlist-word { font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:400;color:var(--text);flex:1; }
+    .wordlist-meaning { font-family:'Noto Serif JP',serif;font-size:12px;color:var(--text3);flex:1;text-align:right; }
+    .wordlist-badge { font-size:10px;border-radius:3px;padding:2px 8px;white-space:nowrap;flex-shrink:0; }
+    .badge-weak { background:var(--red-bg);color:var(--red);border:1px solid #C08080; }
+    .badge-ok   { background:var(--green-bg);color:var(--green);border:1px solid #70B890; }
+    .badge-new  { background:var(--indigo-bg);color:var(--indigo);border:1px solid #C0CAED; }
+    .wordlist-empty { font-size:13px;color:var(--text3);text-align:center;padding:32px 0;line-height:1.9; }
   </style>
 </head>
 <body>
@@ -587,6 +613,25 @@
             <div class="mode-btn-desc">スコア履歴・苦手語を確認</div>
           </div>
         </button>
+        <button class="mode-btn" style="background:var(--surface);border-color:var(--border)" onclick="showWordList()">
+          <span class="mode-btn-icon">▤</span>
+          <div>
+            <div class="mode-btn-label" style="color:var(--text)">単語一覧</div>
+            <div class="mode-btn-desc">学習済みの単語を苦手順で確認</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- 単語一覧 -->
+    <div id="wordListView" class="hidden">
+      <div class="wordlist-page">
+        <button class="wordlist-back" onclick="showView('modeSelectView')">← ホームに戻る</button>
+        <div class="wordlist-header">
+          <span class="wordlist-title">学習済み単語一覧</span>
+          <span class="wordlist-count" id="wordListCount"></span>
+        </div>
+        <div id="wordListItems"></div>
       </div>
     </div>
 
@@ -922,7 +967,7 @@ let dayWords=[],wordIdx=0,quizQueue=[],quizIdx=0,qCorrect=0,qWrong=0,curDate="20
 function dateToDay(s){const d=new Date(s+"T00:00:00");return Math.max(1,Math.floor((d-START)/86400000)+1)}
 
 function showView(id){
-  ["modeSelectView","statsView","wordCardView","quizCardView","summaryView","noDataView","completeView"]
+  ["modeSelectView","statsView","wordListView","wordCardView","quizCardView","summaryView","noDataView","completeView"]
     .forEach(v=>document.getElementById(v).classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
@@ -946,9 +991,9 @@ function renderWord(){
   document.getElementById("posBadge").textContent=w.pos;
   document.getElementById("wordEn").textContent=w.word;
   document.getElementById("wordJa").textContent=w.meaning;
-  // Example: show ans in sentence
+  // Example: replace ___s / ___d / ___ing etc. all at once with ans
   const ans=w.ans||w.word;
-  const exHtml=w.ex_en.replace(/___/g,`<span class="ex-blank">${ans}</span>`);
+  const exHtml=w.ex_en.replace(/___[a-z]*/g,`<span class="ex-blank">${ans}</span>`);
   document.getElementById("exEn").innerHTML=exHtml;
   document.getElementById("exJa").textContent=w.ex_ja;
   // Etymology
@@ -999,8 +1044,8 @@ function renderQuizQ(){
   document.getElementById("wordRange").textContent=`Quiz ${quizIdx+1} / ${quizQueue.length}`;
   const rb=document.getElementById("reviewBadge");
   w._rev?rb.classList.remove("hidden"):rb.classList.add("hidden");
-  document.getElementById("quizSentence").innerHTML=w.ex_en.replace(/___/g,'<span class="quiz-blank-slot">________</span>');
-  document.getElementById("quizJa").textContent=w.ex_ja;
+  document.getElementById("quizSentence").innerHTML=w.ex_en.replace(/___[a-z]*/g,'<span class="quiz-blank-slot">________</span>');
+  document.getElementById("quizJa").textContent="";
   const ans=(w.ans||w.word).toLowerCase();
   const distractors=getDistractors(w,3);
   const choices=shuffle([ans,...distractors]);
@@ -1080,6 +1125,55 @@ function showStats(){
     ?weak.map(w=>`<div class="weak-item"><span class="weak-word">${w.word}<span class="weak-meaning">${w.meaning}</span></span><span class="weak-cnt">${w.wrong}回</span></div>`).join("")
     :'<div style="font-size:12px;color:var(--text3);padding:8px 0">苦手な語はまだありません</div>';
   showView("statsView");
+}
+
+function showWordList(){
+  const srs=loadSRS();
+  // 学習済み単語（SRSに記録があるもの）＋ 全単語を苦手順に並べる
+  const studied=ALL_WORDS.filter(w=>{
+    const day=Math.ceil(w.n/PER_DAY);
+    const st=(day-1)*PER_DAY+1;
+    // 今日の日付までに学習対象になっているか
+    const dayDate=new Date(START.getTime()+(day-1)*86400000).toISOString().split("T")[0];
+    return dayDate<=curDate;
+  });
+  if(!studied.length){
+    document.getElementById("wordListCount").textContent="まだ学習していません";
+    document.getElementById("wordListItems").innerHTML=`<div class="wordlist-empty">日付を進めると<br>学習した単語が表示されます</div>`;
+    showView("wordListView");return;
+  }
+  // 苦手順にソート: wrong数 降順 → wrong=0は最後（名詞の50音順）
+  const sorted=[...studied].sort((a,b)=>{
+    const ra=srs[a.n]||{wrong:0};const rb=srs[b.n]||{wrong:0};
+    if(rb.wrong!==ra.wrong) return rb.wrong-ra.wrong;
+    return a.word.localeCompare(b.word);
+  });
+  document.getElementById("wordListCount").textContent=sorted.length+"語";
+  document.getElementById("wordListItems").innerHTML=sorted.map((w,i)=>{
+    const rec=srs[w.n]||{wrong:0};
+    let badge,bclass;
+    if(rec.wrong>=3){badge=`${rec.wrong}回間違え`;bclass="badge-weak";}
+    else if(rec.wrong>0){badge=`${rec.wrong}回間違え`;bclass="badge-weak";}
+    else if(srs[w.n]){badge="習得";bclass="badge-ok";}
+    else{badge="未テスト";bclass="badge-new";}
+    return `<div class="wordlist-item" onclick="jumpToWord(${w.n})">
+      <span class="wordlist-rank">${i+1}</span>
+      <span class="wordlist-word">${w.word}</span>
+      <span class="wordlist-meaning">${w.meaning}</span>
+      <span class="wordlist-badge ${bclass}">${badge}</span>
+    </div>`;
+  }).join("");
+  showView("wordListView");
+}
+
+function jumpToWord(n){
+  const w=ALL_WORDS.find(x=>x.n===n);if(!w) return;
+  const day=Math.ceil(w.n/PER_DAY);
+  const st=(day-1)*PER_DAY+1,en=st+PER_DAY-1;
+  dayWords=ALL_WORDS.filter(x=>x.n>=st&&x.n<=en);
+  wordIdx=dayWords.findIndex(x=>x.n===n);
+  if(wordIdx<0) wordIdx=0;
+  renderWord();
 }
 
 function finishDay(){wordIdx=0;renderWord();}
