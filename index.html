@@ -512,7 +512,18 @@
       transition: all .15s;
       letter-spacing: 0.03em;
     }
-    .nb-prev { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text2); }
+    .nb-home {
+      flex: 0 0 auto;
+      padding: 13px 14px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text3);
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .nb-home:hover { background: var(--surface2); color: var(--gold); border-color: var(--text3); }
     .nb-prev:disabled { opacity: 0.35; cursor: default; }
     .nb-prev:not(:disabled):hover { background: var(--surface2); }
     .nb-study { flex: 2; background: var(--indigo); color: #fff; border: none; }
@@ -658,6 +669,7 @@
         </div>
       </div>
       <div class="nav">
+        <button class="nb-home" onclick="showView('modeSelectView')" title="ホーム">⌂</button>
         <button class="nav-btn nb-prev" id="prevBtn" onclick="goPrev()" disabled>← 前へ</button>
         <button class="nav-btn nb-gold" id="nextBtn" onclick="goNext()">次へ →</button>
       </div>
@@ -673,6 +685,7 @@
         <div class="quiz-result" id="quizResult"></div>
       </div>
       <div class="nav" style="margin-top:12px">
+        <button class="nb-home" onclick="showView('modeSelectView')" title="ホーム">⌂</button>
         <button class="nav-btn nb-quiz" id="quizNextBtn" onclick="nextQuizQ()" style="display:none;flex:1">Next →</button>
       </div>
     </div>
@@ -715,11 +728,13 @@
       <div class="center-icon">—</div>
       <div class="center-title">このデータはまだ準備中です</div>
       <div class="center-sub">現在 Day 1〜10（第1〜200語）が収録されています。</div>
+      <button class="nav-btn nb-prev" style="margin-top:20px;width:100%" onclick="showView('modeSelectView')">⌂ ホームに戻る</button>
     </div>
     <div id="completeView" class="center-msg hidden">
       <div class="center-icon">✦</div>
       <div class="center-title">全語数 制覇</div>
       <div class="center-sub">すべての単語を学習しました。</div>
+      <button class="nav-btn nb-prev" style="margin-top:20px;width:100%" onclick="showView('modeSelectView')">⌂ ホームに戻る</button>
     </div>
 
   </div>
@@ -1044,7 +1059,7 @@ function renderQuizQ(){
   document.getElementById("wordRange").textContent=`Quiz ${quizIdx+1} / ${quizQueue.length}`;
   const rb=document.getElementById("reviewBadge");
   w._rev?rb.classList.remove("hidden"):rb.classList.add("hidden");
-  document.getElementById("quizSentence").innerHTML=w.ex_en.replace(/___[a-z]*/g,'<span class="quiz-blank-slot">________</span>');
+  document.getElementById("quizSentence").innerHTML=w.ex_en.replace(/___[a-z]*/g,'<span class="quiz-blank-slot">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
   document.getElementById("quizJa").textContent="";
   const ans=(w.ans||w.word).toLowerCase();
   const distractors=getDistractors(w,3);
